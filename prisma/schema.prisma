@@ -11,38 +11,73 @@ datasource db {
 model Book {
   id            Int      @id @default(autoincrement())
   title         String   @db.VarChar(255)
+  isbn          String
   publishedYear Int
+  pageCount     Int
+  language      String
+  description   String
+  coverImage    String
+  author_id     Int
+  publisherId   Int
+  genres        Int
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  authors AuthorBook[]
+  books Book[]
 
   @@map("books")
   @@schema("books_api")
 }
 
 model Author {
-  id        Int      @id @default(autoincrement())
-  firstName String   @db.VarChar(100)
-  lastName  String   @db.VarChar(100)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int      @id @default(autoincrement())
+  firstName   String   @db.VarChar(100)
+  lastName    String   @db.VarChar(100)
+  birthYear   Int      
+  nationality String 
+  biography   String   
+  createdAt   DateTime @default(now())
 
-  books AuthorBook[]
+  books Book[]
 
   @@map("authors")
   @@schema("books_api")
 }
 
-model AuthorBook {
-  id       Int @id @default(autoincrement())
-  authorId Int @map("author_id")
-  bookId   Int @map("book_id")
+model Publisher {
+  id          Int      @id @default(autoincrement())
+  name        String
+  country     String
+  foundedYear Int
+  website     String
+  createdAt   DateTime @default(now())
 
-  author Author @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  books Book[]
 
-  @@unique([authorId, bookId])
-  @@map("author_books")
+  @@map("puplisher")
+  @@schema("books_api")
+}
+
+model Genre {
+  id    Int
+  name  String
+
+  books Book[]
+
+  @@map("puplisher")
+  @@schema("books_api")
+}
+
+model Review {
+    id:         Int
+    bookId:     Int @relation(fields: [bookId], references: [id], onDelete: Cascade)
+    userName:   String
+    rating:     Int
+    comment:    String
+    createdAt:  DateTime @default(now())
+    
+    books Book[]
+
+  @@map("puplisher")
   @@schema("books_api")
 }
