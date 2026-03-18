@@ -68,35 +68,3 @@ function generateReview(id: number, books: Book[]): Review {
     createdAt: faker.date.recent()
   };
 }
-
-function generateArray<T>(count: number,factory: (index: number) => T): T[] {
-  return Array.from({ length: count }, (_, i) => factory(i + 1));
-}
-
-function generateSeededData(seed = 42) {
-  faker.seed(seed);
-
-  const genres = generateArray(6, generateGenre);
-  const publishers = generateArray(4, generatePublisher);
-  const authors = generateArray(6, generateAuthor);
-
-  const books = generateArray(15, (i) =>
-    generateBook(i, authors, publishers, genres)
-  );
-
-  const reviews = generateArray(20, (i) =>
-    generateReview(i, books)
-  );
-
-  faker.seed();
-
-  return { genres, publishers, authors, books, reviews };
-}
-
-const data = generateSeededData();
-
-export const genres: Genre[] = data.genres;
-export const publishers: Publisher[] = data.publishers;
-export const authors: Author[] = data.authors;
-export const books: Book[] = data.books;
-export const reviews: Review[] = data.reviews;
