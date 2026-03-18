@@ -1,5 +1,11 @@
+import { faker } from "@faker-js/faker";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { Book } from "../src/models/books.model";
+import { Author } from "../src/models/author.model";
+import { Publisher } from "../src/models/publisher.model";
+import { Review } from "../src/models/review.model";
+import { Genre } from "../src/models/genre.model";
 const prisma = new PrismaClient({
     adapter: new PrismaPg({
         connectionString: process.env.DATABASE_URL as string,
@@ -10,6 +16,9 @@ async function main() {
     await prisma.authorBook.deleteMany();
     await prisma.book.deleteMany();
     await prisma.author.deleteMany();
+    await prisma.review.deleteMany();
+    await prisma.genre.deleteMany();
+    await prisma.publisher.deleteMany();
     const authors = await prisma.$transaction([
         prisma.author.create({
             data: { firstName: "Robert", lastName: "Martin" },
