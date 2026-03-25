@@ -9,11 +9,11 @@
 ### 2. Kohustuslik funktsionaalsus
 ---
 ### 3. Mock Data
-Raamatud - 15
-Autorid	- 6
-Kirjastused	- 4
-Arvustused - 20
-Žanrid - 6
+- Raamatud - 15
+- Autorid	- 6
+- Kirjastused	- 4
+- Arvustused - 20
+- Žanrid - 6
 ### 4. Koodistruktuur
 src/models/ - (author.model.ts, books.model.ts, genre.model.ts, publisher.model.ts, review.model.ts)
 src/data/	- (data.ts)
