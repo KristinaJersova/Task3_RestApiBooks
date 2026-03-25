@@ -1,9 +1,13 @@
 import "dotenv/config";
 import express from "express";
 import bookRoutes from "./routes/book.routes.js";
+import reviewsRoutes from "./routes/review.routes";
 const app = express();
 
 
+
+
+export default app;
 /*
 Serveri port.
 Kui .env failis on PORT defineeritud,
