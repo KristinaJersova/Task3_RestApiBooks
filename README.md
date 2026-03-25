@@ -12,3 +12,4 @@ Käivitamise käsud:
 - npm install -D ts-node typescript
 - npx ts-node prisma/seed.ts or npx tsx prisma/seed.ts
 - npx prisma studio
+- npm run dev
