@@ -15,13 +15,13 @@
 - Arvustused - 20
 - Žanrid - 6
 ### 4. Koodistruktuur
-src/models/ - (author.model.ts, books.model.ts, genre.model.ts, publisher.model.ts, review.model.ts)
-src/data/	- (data.ts)
-src/services/	- (books.service.ts, review.service.ts)
-src/validators/	- (zod.ts)
-src/middleware/	- (errors.ts)
-src/express/routes/	- ()
-prisma/	- (migration, seed.ts, schema.prisma)
+- src/models/ - (author.model.ts, books.model.ts, genre.model.ts, publisher.model.ts, review.model.ts)
+- src/data/	- (data.ts)
+- src/services/	- (books.service.ts, review.service.ts)
+- src/validators/	- (zod.ts)
+- src/middleware/	- (errors.ts)
+- src/express/routes/	- (book.routes.ts)
+- prisma/	- (migration, seed.ts, schema.prisma)
 ### 5. Response formaadid
 ---
 
