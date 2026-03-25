@@ -5,48 +5,8 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
   schemas  = ["books_api"]
-}
-
-model Publisher {
-  id          Int      @id @default(autoincrement())
-  name        String
-  country     String
-  foundedYear Int
-  website     String
-  createdAt   DateTime @default(now())
-
-  // One-to-many: One publisher has many books
-  books       Book[]
-
-  @@map("publishers")
-  @@schema("books_api")
-}
-
-model Genre {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
-
-  // Many-to-many: A genre can have many books
-  books Book[] @relation("BookToGenre")
-
-  @@map("genres")
-  @@schema("books_api")
-}
-
-model Review {
-  id        Int      @id @default(autoincrement())
-  bookId    Int      @map("book_id")
-  userName  String
-  rating    Int
-  comment   String
-  createdAt DateTime @default(now())
-
-  // Many-to-one: Many reviews belong to one book
-  book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
-
-  @@map("reviews")
-  @@schema("books_api")
 }
 
 model Author {
@@ -55,37 +15,91 @@ model Author {
   lastName    String   @db.VarChar(100)
   birthYear   Int
   nationality String
-  biography   String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  biography   String?
 
-  // One-to-many: One author can write many books
-  books       Book[]
+  books Book[]
+
+  createdAt DateTime @default(now())
 
   @@map("authors")
+  @@schema("books_api")
+}
+
+model Publisher {
+  id          Int      @id @default(autoincrement())
+  name        String
+  country     String
+  foundedYear Int
+  website     String?
+
+  books Book[]
+
+  createdAt DateTime @default(now())
+
+  @@map("publishers")
   @@schema("books_api")
 }
 
 model Book {
   id            Int      @id @default(autoincrement())
   title         String   @db.VarChar(255)
-  isbn          String   @unique
+  isbn          String
   publishedYear Int
   pageCount     Int
   language      String
   description   String
-  coverImage    String
-  authorId      Int      @map("author_id")
-  publisherId   Int      @map("publisher_id")
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  coverImage    String?
 
-  // Relations
-  author        Author    @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  publisher     Publisher @relation(fields: [publisherId], references: [id], onDelete: Cascade)
-  reviews       Review[]
-  genres        Genre[]   @relation("BookToGenre")
+  authorId Int
+  author   Author @relation(fields: [authorId], references: [id])
+
+  publisherId Int
+  publisher   Publisher @relation(fields: [publisherId], references: [id])
+
+  genres  BookGenre[]
+  reviews Review[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("books")
+  @@schema("books_api")
+}
+
+model Genre {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  books BookGenre[]
+
+  @@map("genres")
+  @@schema("books_api")
+}
+
+model BookGenre {
+  id      Int @id @default(autoincrement())
+  bookId  Int
+  genreId Int
+
+  book  Book  @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  genre Genre @relation(fields: [genreId], references: [id], onDelete: Cascade)
+
+  @@unique([bookId, genreId])
+  @@map("book_genres")
+  @@schema("books_api")
+}
+
+model Review {
+  id       Int    @id @default(autoincrement())
+  bookId   Int
+  userName String
+  rating   Int
+  comment  String
+
+  book Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("reviews")
   @@schema("books_api")
 }
