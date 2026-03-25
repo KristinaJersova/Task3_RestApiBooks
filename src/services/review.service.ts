@@ -1,14 +1,42 @@
-import { Review } from "../models/review.model";
+import prisma from "../lib/prisma";
 
-export function getAverageRating(bookId: number, reviews: Review[]): number | null {
+export interface ReviewInput {
+  bookId: number;
+  userName: string;
+  rating: number;
+  comment: string;
+}
 
-    const bookReviews = reviews.filter(r => r.bookId === bookId);
+export async function getReviewsByBook(bookId: number) {
+  return prisma.review.findMany({
+    where: { bookId },
+    orderBy: { createdAt: "desc" },
+  });
+}
 
-    if (bookReviews.length === 0) {
-        return null;
-    }
+export async function createReview(data: ReviewInput) {
+  return prisma.review.create({
+    data,
+  });
+}
 
-    const sum = bookReviews.reduce((acc, r) => acc + r.rating, 0);
+export async function deleteReview(reviewId: number) {
+  return prisma.review.delete({
+    where: { id: reviewId },
+  });
+}
 
-    return sum / bookReviews.length;
+export async function updateReview(reviewId: number, data: Partial<ReviewInput>) {
+  return prisma.review.update({
+    where: { id: reviewId },
+    data,
+  });
+}
+
+export async function getBookAverageRating(bookId: number) {
+  const result = await prisma.review.aggregate({
+    where: { bookId },
+    _avg: { rating: true },
+  });
+  return result._avg.rating ?? 0;
 }

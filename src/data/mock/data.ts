@@ -42,7 +42,7 @@ function generateBook(id: number,authors: Author[],publishers: Publisher[],genre
     isbn: faker.commerce.isbn(),
     publishedYear: faker.number.int({ min: 1980, max: 2024 }),
     pageCount: faker.number.int({ min: 100, max: 900 }),
-    language: faker.location.language().toString(),
+    language: faker.location.language().name,
     description: faker.lorem.paragraph(),
     coverImage: faker.image.urlLoremFlickr({ category: "book" }),
     authorId: faker.helpers.arrayElement(authors).id,

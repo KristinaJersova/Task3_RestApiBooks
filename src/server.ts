@@ -4,6 +4,9 @@ import bookRoutes from "./routes/express/book.routes.js";
 const app = express();
 
 
+
+
+export default app;
 /*
 Serveri port.
 Kui .env failis on PORT defineeritud,
