@@ -1,13 +1,6 @@
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
-
-import {
-  authors,
-  books,
-  genres,
-  publishers,
-  reviews,
-} from "../src/data/mock/data";
+import {authors,books,genres,publishers,reviews,} from "../src/data/mock/data";
 
 const prisma = new PrismaClient({
   adapter: new PrismaPg({
