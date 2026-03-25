@@ -1,7 +1,6 @@
 import "dotenv/config";
 import express from "express";
 import bookRoutes from "./routes/book.routes.js";
-import reviewsRoutes from "./routes/review.routes";
 const app = express();
 
 

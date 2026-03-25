@@ -11,7 +11,7 @@ export async function getAllBooks() {
     include: {
       authors: {
         include: {
-          author: true,
+          authors: true,
         },
       },
     },
