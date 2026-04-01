@@ -58,7 +58,7 @@
 - GET  http://localhost:3000/api/v1/books/74/reviews 
 - GET http://localhost:3000/api/v1/books/74/average-rating 
 - POST http://localhost:3000/api/v1/books/74/reviews
-REQUEST 
+-- REQUEST 
 {
   "userName": "John",
   "rating": 5,
