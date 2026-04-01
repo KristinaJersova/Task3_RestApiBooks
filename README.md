@@ -30,7 +30,6 @@
 - prisma/	- (migration, seed.ts, schema.prisma)
 
 ## 4. Setup
-### Setup juhised
 1. Projekti kloonimine GitHubist
 - git clone <repo-url>
 - cd <project-folder>
@@ -53,26 +52,28 @@
 - GET http://localhost:3000/api/v1/books
 
 ## 5. Endpoint'id
-- GET http://localhost:3000/api/v1/books
-- GET http://localhost:3000/api/v1/books/74
-- GET  http://localhost:3000/api/v1/books/74/reviews 
-- GET http://localhost:3000/api/v1/books/74/average-rating 
-- POST http://localhost:3000/api/v1/books/74/reviews
-- - REQUEST 
+### GET http://localhost:3000/api/v1/books
+- RESPONSE
+- All books
+### GET http://localhost:3000/api/v1/books/74
+### GET  http://localhost:3000/api/v1/books/74/reviews 
+### GET http://localhost:3000/api/v1/books/74/average-rating 
+### POST http://localhost:3000/api/v1/books/74/reviews
+REQUEST 
 {
   "userName": "John",
   "rating": 5,
   "comment": "Great!"
 }
-- GET http://localhost:3000/api/v1/books?year=2020
-- GET http://localhost:3000/api/v1/books?language=Portuguese
-- GET http://localhost:3000/api/v1/books?sortBy=title
-- GET http://localhost:3000/api/v1/books?sortBy=title&order=desc (or asc)
-- GET http://localhost:3000/api/v1/books?page=3&limit=2
-- POST http://localhost:3000/api/v1/books
-REQUEST
-BODY - JSON
-{
+### GET http://localhost:3000/api/v1/books?year=2020
+### GET http://localhost:3000/api/v1/books?language=Portuguese
+### GET http://localhost:3000/api/v1/books?sortBy=title
+### GET http://localhost:3000/api/v1/books?sortBy=title&order=desc (or asc)
+### GET http://localhost:3000/api/v1/books?page=3&limit=2
+### POST http://localhost:3000/api/v1/books
+- REQUEST
+- BODY - JSON
+   {
   "title": "Test Book",
   "isbn": "1234567890",
   "publishedYear": 2023,
@@ -82,7 +83,7 @@ BODY - JSON
   "authorId": 25,
   "publisherId": 17
 }
-RESPONSE
+- RESPONSE
 {
   "id": 78,
   "title": "Test Book",
@@ -115,12 +116,12 @@ RESPONSE
   },
   "genres": []
 }
-- PUT http://localhost:3000/api/v1/books/78
-REQUEST
+### PUT http://localhost:3000/api/v1/books/78
+- REQUEST
 {
   "title": "Updated Book"
 }
-RESPONSE
+- RESPONSE
 {
   "id": 78,
   "title": "Updated Book",
@@ -153,15 +154,15 @@ RESPONSE
   },
   "genres": []
 }
-- DELETE http://localhost:3000/api/v1/books/78
-RESPONSE
+### DELETE http://localhost:3000/api/v1/books/78
+- RESPONSE
 1
 Status: 204 No Content
 Size: 0 Bytes
 Time: 389 ms
 
-### Näide
-RESPONSE
+## Näide
+- RESPONSE
 {
   "id": 74,
   "title": "A Brief History of Time",
