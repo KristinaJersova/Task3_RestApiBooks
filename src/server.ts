@@ -1,32 +1,18 @@
 import "dotenv/config";
 import express from "express";
-import bookRoutes from "./routes/express/book.routes.js";
+import bookRoutes from "./routes/express/book.routes";
+import { errorHandler } from "./middleware/errors";
+
 const app = express();
 
-
-
-
-export default app;
-/*
-Serveri port.
-Kui .env failis on PORT defineeritud,
-siis kasutatakse seda.
-*/
-const PORT = Number(process.env.PORT) || 3000;
-/*
-Middleware JSON päringute töötlemiseks
-*/
 app.use(express.json());
-/*
-API route'id
-Kõik route'id algavad prefiksiga /api/v1
-*/
+
 app.use("/api/v1", bookRoutes);
-/*
-Serveri käivitamine
-*/
+
+app.use(errorHandler);
+
+const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
-console.log(`Server töötab: http://localhost:${PORT}`);
-console.log(`Books API: 
-http://localhost:${PORT}/api/v1/books`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
