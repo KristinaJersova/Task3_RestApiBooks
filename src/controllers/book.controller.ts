@@ -1,99 +1,85 @@
-import { Request, Response } from "express";
-import { books, authors, publishers, genres } from "../data/mock/data";
+import { Request, Response, NextFunction } from "express";
+import * as bookService from "../services/books.service";
+import { createBookSchema, updateBookSchema, reviewSchema } from "../validators/zod";
 
-let nextBookId = books.length + 1;
-
-export function getBooksHandler(req: Request, res: Response) {
-  let filteredBooks = [...books];
-  const {
-    title,
-    publishedYear,
-    language,
-    authorId,
-    genreId,
-    sort,
-    page = "1",
-    limit = "10",
-  } = req.query;
-
-  if (title) {
-    filteredBooks = filteredBooks.filter((b) =>
-      b.title.toLowerCase().includes(String(title).toLowerCase())
-    );
+export async function getBooksHandler(req: Request, res: Response, next: NextFunction) {
+  try {
+    const result = await bookService.getAllBooks(req.query);
+    res.json(result);
+  } catch (err) {
+    next(err);
   }
-  if (publishedYear) {
-    filteredBooks = filteredBooks.filter(
-      (b) => b.publishedYear === Number(publishedYear)
-    );
-  }
-  if (language) {
-    filteredBooks = filteredBooks.filter(
-      (b) => b.language.toLowerCase() === String(language).toLowerCase()
-    );
-  }
-  if (authorId) {
-    filteredBooks = filteredBooks.filter(
-      (b) => b.authorId === Number(authorId)
-    );
-  }
-  if (genreId) {
-    filteredBooks = filteredBooks.filter((b) =>
-      b.genres.includes(Number(genreId))
-    );
-  }
-
-  if (sort === "title") {
-    filteredBooks.sort((a, b) => a.title.localeCompare(b.title));
-  } else if (sort === "publishedYear") {
-    filteredBooks.sort((a, b) => a.publishedYear - b.publishedYear);
-  }
-
-  const pageNum = Number(page);
-  const limitNum = Number(limit);
-  const start = (pageNum - 1) * limitNum;
-  const paginatedBooks = filteredBooks.slice(start, start + limitNum);
-
-  res.json({
-    success: true,
-    data: paginatedBooks,
-    pagination: {
-      page: pageNum,
-      limit: limitNum,
-      total: filteredBooks.length,
-    },
-  });
 }
 
-export function getBookByIdHandler(req: Request, res: Response) {
-  const id = Number(req.params.id);
-  const book = books.find((b) => b.id === id);
-  if (!book)
-    return res.status(404).json({ success: false, error: "Book not found" });
-  res.json({ success: true, data: book });
+export async function getBookByIdHandler(req: Request, res: Response, next: NextFunction) {
+  try {
+    const book = await bookService.getBookById(Number(req.params.id));
+
+    if (!book) {
+      return res.status(404).json({ error: "Book not found" });
+    }
+
+    res.json(book);
+  } catch (err) {
+    next(err);
+  }
 }
 
-export function createBookHandler(req: Request, res: Response) {
-  const newBook = { id: nextBookId++, ...req.body };
-  books.push(newBook);
-  res.status(201).json({ success: true, data: newBook });
+export async function createBookHandler(req: Request, res: Response, next: NextFunction) {
+  try {
+    const data = createBookSchema.parse(req.body);
+    const book = await bookService.createBook(data);
+
+    res.status(201).json(book);
+  } catch (err) {
+    next(err);
+  }
 }
 
-export function updateBookHandler(req: Request, res: Response) {
-  const id = Number(req.params.id);
-  const bookIndex = books.findIndex((b) => b.id === id);
-  if (bookIndex === -1)
-    return res.status(404).json({ success: false, error: "Book not found" });
+export async function updateBookHandler(req: Request, res: Response, next: NextFunction) {
+  try {
+    const data = updateBookSchema.parse(req.body);
 
-  books[bookIndex] = { ...books[bookIndex], ...req.body };
-  res.json({ success: true, data: books[bookIndex] });
+    const book = await bookService.updateBook(Number(req.params.id), data);
+
+    res.json(book);
+  } catch (err) {
+    next(err);
+  }
 }
 
-export function deleteBookHandler(req: Request, res: Response) {
-  const id = Number(req.params.id);
-  const index = books.findIndex((b) => b.id === id);
-  if (index === -1)
-    return res.status(404).json({ success: false, error: "Book not found" });
+export async function deleteBookHandler(req: Request, res: Response, next: NextFunction) {
+  try {
+    await bookService.deleteBook(Number(req.params.id));
+    res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
+}
 
-  books.splice(index, 1);
-  res.status(204).send();
+export async function createReviewHandler(req: Request, res: Response, next: NextFunction) {
+  try {
+    const review = await bookService.createReview(Number(req.params.bookId), req.body);
+    res.status(201).json(review);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function getReviewsByBookHandler(req: Request, res: Response, next: NextFunction) {
+  try {
+    const reviews = await bookService.getReviewsByBook(Number(req.params.bookId));
+    res.json(reviews);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function getAverageRatingHandler(req: Request, res: Response, next: NextFunction) {
+  try {
+    const rating = await bookService.getAverageRating(Number(req.params.id));
+    res.json({ averageRating: rating });
+  } catch (err) {
+    next(err);
+  }
 }
