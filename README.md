@@ -53,13 +53,13 @@
 
 ## 5. Endpoint'id
 - GET http://localhost:3000/api/v1/books
-- RESPONSE
-- All books
+    RESPONSE
+    All books
 - GET http://localhost:3000/api/v1/books/74
 - GET  http://localhost:3000/api/v1/books/74/reviews 
 - GET http://localhost:3000/api/v1/books/74/average-rating 
 - POST http://localhost:3000/api/v1/books/74/reviews
-- REQUEST 
+    REQUEST 
 {
   "userName": "John",
   "rating": 5,
@@ -71,8 +71,8 @@
 - GET http://localhost:3000/api/v1/books?sortBy=title&order=desc (or asc)
 - GET http://localhost:3000/api/v1/books?page=3&limit=2
 - POST http://localhost:3000/api/v1/books
-- REQUEST
-- BODY - JSON
+    REQUEST
+    BODY - JSON
    {
   "title": "Test Book",
   "isbn": "1234567890",
@@ -83,7 +83,7 @@
   "authorId": 25,
   "publisherId": 17
 }
-- RESPONSE
+    RESPONSE
 {
   "id": 78,
   "title": "Test Book",
@@ -117,11 +117,11 @@
   "genres": []
 }
 - PUT http://localhost:3000/api/v1/books/78
-- REQUEST
+    REQUEST
 {
   "title": "Updated Book"
 }
-- RESPONSE
+    RESPONSE
 {
   "id": 78,
   "title": "Updated Book",
@@ -155,7 +155,7 @@
   "genres": []
 }
 - DELETE http://localhost:3000/api/v1/books/78
-- RESPONSE
+    RESPONSE
 1
 Status: 204 No Content
 Size: 0 Bytes
