@@ -52,14 +52,14 @@
 - GET http://localhost:3000/api/v1/books
 
 ## 5. Endpoint'id
-### GET http://localhost:3000/api/v1/books
+- GET http://localhost:3000/api/v1/books
 - RESPONSE
 - All books
-### GET http://localhost:3000/api/v1/books/74
-### GET  http://localhost:3000/api/v1/books/74/reviews 
-### GET http://localhost:3000/api/v1/books/74/average-rating 
-### POST http://localhost:3000/api/v1/books/74/reviews
-REQUEST 
+- GET http://localhost:3000/api/v1/books/74
+- GET  http://localhost:3000/api/v1/books/74/reviews 
+- GET http://localhost:3000/api/v1/books/74/average-rating 
+- POST http://localhost:3000/api/v1/books/74/reviews
+- REQUEST 
 {
   "userName": "John",
   "rating": 5,
