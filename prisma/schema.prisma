@@ -14,11 +14,11 @@ model Author {
   lastName    String   @db.VarChar(100)
   birthYear   Int
   nationality String
-  biography   String?
+  biography   String
 
   books Book[]
 
-  createdAt DateTime @default(now())
+  createdAt   DateTime @default(now())
 
   @@map("authors")
   @@schema("books_api")
@@ -33,7 +33,7 @@ model Publisher {
 
   books Book[]
 
-  createdAt DateTime @default(now())
+  createdAt   DateTime @default(now())
 
   @@map("publishers")
   @@schema("books_api")
@@ -42,24 +42,24 @@ model Publisher {
 model Book {
   id            Int      @id @default(autoincrement())
   title         String   @db.VarChar(255)
-  isbn          String
+  isbn          String   @unique
   publishedYear Int
   pageCount     Int
   language      String
   description   String
   coverImage    String?
 
-  authorId Int
-  author   Author @relation(fields: [authorId], references: [id])
+  authorId      Int
+  author        Author  @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
-  publisherId Int
-  publisher   Publisher @relation(fields: [publisherId], references: [id])
+  publisherId   Int
+  publisher     Publisher @relation(fields: [publisherId], references: [id], onDelete: Cascade)
 
-  genres  BookGenre[]
-  reviews Review[]
+  genres        BookGenre[]  
+  reviews       Review[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   @@map("books")
   @@schema("books_api")
@@ -95,7 +95,7 @@ model Review {
   rating   Int
   comment  String
 
-  book Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  book     Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 
