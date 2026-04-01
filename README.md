@@ -65,12 +65,12 @@ REQUEST
   "rating": 5,
   "comment": "Great!"
 }
-### GET http://localhost:3000/api/v1/books?year=2020
-### GET http://localhost:3000/api/v1/books?language=Portuguese
-### GET http://localhost:3000/api/v1/books?sortBy=title
-### GET http://localhost:3000/api/v1/books?sortBy=title&order=desc (or asc)
-### GET http://localhost:3000/api/v1/books?page=3&limit=2
-### POST http://localhost:3000/api/v1/books
+- GET http://localhost:3000/api/v1/books?year=2020
+- GET http://localhost:3000/api/v1/books?language=Portuguese
+- GET http://localhost:3000/api/v1/books?sortBy=title
+- GET http://localhost:3000/api/v1/books?sortBy=title&order=desc (or asc)
+- GET http://localhost:3000/api/v1/books?page=3&limit=2
+- POST http://localhost:3000/api/v1/books
 - REQUEST
 - BODY - JSON
    {
@@ -116,7 +116,7 @@ REQUEST
   },
   "genres": []
 }
-### PUT http://localhost:3000/api/v1/books/78
+- PUT http://localhost:3000/api/v1/books/78
 - REQUEST
 {
   "title": "Updated Book"
@@ -154,7 +154,7 @@ REQUEST
   },
   "genres": []
 }
-### DELETE http://localhost:3000/api/v1/books/78
+- DELETE http://localhost:3000/api/v1/books/78
 - RESPONSE
 1
 Status: 204 No Content
