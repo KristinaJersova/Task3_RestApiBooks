@@ -247,5 +247,5 @@ Time: 389 ms
 - npx ts-node prisma/seed.ts or npx tsx prisma/seed.ts
 - npx prisma studio
 - npm run dev
-- npm prisma db seed
+- npx prisma db seed
 - npm prisma db push
