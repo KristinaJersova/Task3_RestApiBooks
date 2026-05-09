@@ -12,7 +12,7 @@ export const createBookSchema = z.object({
 
   publisherId: z.number(),
 
-  authorId: z.number().optional(),
+  authorId: z.number(),
   genreIds: z.array(z.number()).optional(),
 
   coverImage: z.string().optional(),
