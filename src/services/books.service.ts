@@ -1,4 +1,5 @@
 import prisma from "../lib/prisma";
+import { Prisma } from "../generated/prisma/client";
 
 interface QueryParams {
   title?: string;
