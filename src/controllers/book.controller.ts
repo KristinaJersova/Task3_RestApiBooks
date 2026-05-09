@@ -13,7 +13,7 @@ export async function getBooksHandler(req: Request, res: Response, next: NextFun
 
 export async function getBookByIdHandler(req: Request, res: Response, next: NextFunction) {
   try {
-    const book = await bookService.getBookById(Number(req.params.id));
+    const book = await bookService.getBookById(Number(req.params.bookId));
 
     if (!book) {
       return res.status(404).json({ error: "Book not found" });
@@ -40,7 +40,7 @@ export async function updateBookHandler(req: Request, res: Response, next: NextF
   try {
     const data = updateBookSchema.parse(req.body);
 
-    const book = await bookService.updateBook(Number(req.params.id), data);
+    const book = await bookService.updateBook(Number(req.params.bookId), data);
 
     res.json(book);
   } catch (err) {
@@ -50,7 +50,7 @@ export async function updateBookHandler(req: Request, res: Response, next: NextF
 
 export async function deleteBookHandler(req: Request, res: Response, next: NextFunction) {
   try {
-    await bookService.deleteBook(Number(req.params.id));
+    await bookService.deleteBook(Number(req.params.bookId));
     res.status(204).send();
   } catch (err) {
     next(err);
@@ -59,7 +59,8 @@ export async function deleteBookHandler(req: Request, res: Response, next: NextF
 
 export async function createReviewHandler(req: Request, res: Response, next: NextFunction) {
   try {
-    const review = await bookService.createReview(Number(req.params.bookId), req.body);
+    const data = reviewSchema.parse(req.body);
+    const review = await bookService.createReview(Number(req.params.bookId), data);
     res.status(201).json(review);
   } catch (err) {
     next(err);
@@ -77,7 +78,7 @@ export async function getReviewsByBookHandler(req: Request, res: Response, next:
 
 export async function getAverageRatingHandler(req: Request, res: Response, next: NextFunction) {
   try {
-    const rating = await bookService.getAverageRating(Number(req.params.id));
+    const rating = await bookService.getAverageRating(Number(req.params.bookId));
     res.json({ averageRating: rating });
   } catch (err) {
     next(err);
