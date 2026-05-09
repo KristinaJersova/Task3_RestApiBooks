@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
+import { Prisma } from "../generated/prisma/client";
 
 export function errorHandler(
   err: unknown,
@@ -17,6 +18,19 @@ export function errorHandler(
         message: e.message,
       })),
     });
+  }
+
+  if (err instanceof Prisma.PrismaClientKnownRequestError) {
+    switch (err.code) {
+      case "P2025":
+        return res.status(404).json({ error: "Resource not found" });
+
+      case "P2002":
+        return res.status(409).json({
+          error: "Unique constraint failed",
+          meta: err.meta,
+        });
+    }
   }
 
   return res.status(500).json({
